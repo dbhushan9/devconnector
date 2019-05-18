@@ -1,13 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
-const users = require("./router/users");
-const profile = require("./router/profile");
-const posts = require("./router/posts");
+const users = require("./router/api/users");
+const profile = require("./router/api/profile");
+const posts = require("./router/api/posts");
+
+const PORT = process.env.port || 5000;
 
 const app = express();
 
-const PORT = process.env.port || 5000;
+//BodyParser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 //DB Config
 const db = require("./config/keys").mongoURI;
@@ -18,11 +23,17 @@ mongoose
   .then(() => console.log("connected to mongodb"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => req.send("Hello"));
+//Passport middleware
+app.use(passport.initialize());
 
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+//Passport Config
+require("./config/passport")(passport);
 
 //Rotues
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
+
+app.get("/", (req, res) => req.send("Hello"));
+
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));
