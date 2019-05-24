@@ -1,6 +1,6 @@
  import axios from 'axios';
 
- import {GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from './types';
+ import {GET_PROFILE, PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE } from './types';
 
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
@@ -26,3 +26,9 @@ export const getCurrentProfile = () => dispatch => {
      }
  }
  
+ 
+ export const clearCurrentProfile = () =>{
+    return {
+        type: CLEAR_CURRENT_PROFILE
+    }
+}
