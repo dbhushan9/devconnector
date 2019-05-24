@@ -1,6 +1,6 @@
  import axios from 'axios';
 
- import {GET_PROFILE, PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE } from './types';
+ import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE } from './types';
 
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
@@ -19,15 +19,14 @@ export const getCurrentProfile = () => dispatch => {
         )
 }
 
-
  export const setProfileLoading = () =>{
      return {
          type: PROFILE_LOADING
      }
  }
- 
- 
+  
  export const clearCurrentProfile = () =>{
+     console.log('clearning current Profile');
     return {
         type: CLEAR_CURRENT_PROFILE
     }
