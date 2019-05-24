@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import jwt_decode from 'jwt-decode';
@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/common/PrivateRoute';
 
 import './App.css';
 
@@ -28,7 +29,6 @@ if(localStorage.jwtToken){
   //checl for expired token
   const currentTime = Date.now()/1000
   if (decoded.exp  < currentTime){
-    console.log('Token has Expired '+currentTime + decoded.exp)
     store.dispatch(logoutUser); 
     //clear current profile
     store.dispatch(clearCurrentProfile);
@@ -49,7 +49,9 @@ function App() {
             <div className='container'>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/dashboard' component={Dashboard} />
+              <Switch>
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              </Switch>
             </div>
           <Footer />
         </div>
