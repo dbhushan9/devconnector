@@ -161,7 +161,11 @@ router.post(
       };
 
       profile.experience.unshift(newExp);
-      profile.save().then(profile => res.json(profile));
+      console.log(profile);
+      profile
+        .save()
+        .then(profile => res.json(profile))
+        .catch(err => res.status(400).json(err));
     });
   }
 );
