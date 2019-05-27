@@ -53,6 +53,7 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
+  console.log(errors);
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -63,7 +64,7 @@ router.post("/login", (req, res) => {
   User.findOne({ email }).then(user => {
     if (!user) {
       errors.email = "User not found";
-      return res.status(404).json({ errors });
+      return res.status(404).json(errors);
     }
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
@@ -83,7 +84,8 @@ router.post("/login", (req, res) => {
         );
       } else {
         errors.password = "Incorrect Password";
-        return res.status(400).json({ errors });
+        console.log(errors);
+        return res.status(400).json(errors);
       }
     });
   });
