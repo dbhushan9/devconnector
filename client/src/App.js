@@ -18,6 +18,7 @@ import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-credentials/AddExperience'
 import AddEducation from './components/add-credentials/AddEducation';
 import Profiles from './components/profiles/Profiles'
+import Profile from './components/profile/Profile'
 
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -35,7 +36,7 @@ if(localStorage.jwtToken){
   //checl for expired token
   const currentTime = Date.now()/1000
   if (decoded.exp  < currentTime){
-    store.dispatch(logoutUser); 
+    store.dispatch(logoutUser()); 
     //clear current profile
     store.dispatch(clearCurrentProfile);
     //redirect to login page
@@ -53,7 +54,9 @@ function App() {
             <Route exact path='/' component={Landing} />
             <div className='container'>
               <Route exact path='/login' component={Login} />
-              <Route exact path='/register' component={Register} /><Route exact path='/profiles' component={Profiles}/>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/profiles' component={Profiles}/>
+              <Route exact path='/profile/:handle' component={Profile}/>
               <Switch>
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
               </Switch>
