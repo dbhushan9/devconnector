@@ -4,7 +4,7 @@ import {ADD_POST,CLEAR_ERRORS, GET_ERRORS, POST_LOADING,GET_POST, GET_POSTS,DELE
 
 //Add POST
 export const addPost = postData => dispatch =>{
-    dispatch(CLEAR_ERRORS);
+    dispatch(clearErrors());
     axios
     .post('/api/posts',postData)
     .then(res=>
@@ -105,7 +105,7 @@ export const removeLike = id => dispatch =>{
 
 //Add Comment
 export const addComment = (postId, commentData) => dispatch =>{
-    dispatch(CLEAR_ERRORS);
+    dispatch(clearErrors());
     axios
     .post(`/api/posts/comment/${postId}`,commentData)
     .then(res=>
