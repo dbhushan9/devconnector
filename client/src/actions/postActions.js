@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ADD_POST, GET_ERRORS} from './types';
+import {ADD_POST, GET_ERRORS, POST_LOADING, GET_POSTS} from './types';
 
 //Add POST
 export const addPost = postData => dispatch =>{
@@ -18,4 +18,31 @@ export const addPost = postData => dispatch =>{
             payload: err.response.data
         })    
     )
+}
+
+//Get POST
+export const getPosts = () => dispatch =>{
+    dispatch(setPostLoadingState());
+    axios
+    .get('/api/posts')
+    .then(res=>
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        }) 
+    )
+    .catch(err =>
+        dispatch({
+            type:GET_POSTS,
+            payload: null
+        })    
+    )
+}
+
+
+//set Loading state
+export const setPostLoadingState = () =>{
+    return {
+        type: POST_LOADING
+    }
 }
